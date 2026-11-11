@@ -18,7 +18,15 @@ npm test
 npm run build
 ```
 
-构建产物位于 `dist/`，可部署到静态 HTTP 服务的根路径。开发服务不提供热更新，修改源码后刷新页面。
+构建产物位于 `dist/`，使用相对资源路径，可部署到静态 HTTP 服务的根路径或项目子目录。开发服务不提供热更新，修改源码后刷新页面。
+
+## GitHub Pages 部署
+
+源码仓库保持私有。由于当前 GitHub 套餐不支持私有仓库 Pages，使用公开仓库 `jwk000/happy-particle-system-pages` 托管构建产物，Pages 发布源为 `main` 分支根目录。
+
+更新站点时，先执行 `npm test` 和 `npm run build`，将 `dist/` 中的 `index.html` 与 `src/` 同步到发布仓库，保留空文件 `.nojekyll`，提交并推送发布仓库的 `main` 分支。GitHub Pages 会自动发布该分支。
+
+发布仓库只包含浏览器使用的静态文件；这些 HTML、CSS 和 JavaScript 对访问者公开，不包含源码仓库的提交历史、测试、说明文档及预览截图。本地预览与 Pages 地址属于不同来源，浏览器保存的项目不会自动迁移，需要通过 JSON 导出和导入转移。
 
 ## 已实现功能
 
