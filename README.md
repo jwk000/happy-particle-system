@@ -1,13 +1,20 @@
 # Happy Particle System
 
-参照 [Trail Studio 粒子与拖尾编辑器](https://it.kxxxl.com/animal-box/particle-system/) 实现的本地网页编辑器。使用原生 JavaScript、Canvas 2D 和 CSS，无第三方运行依赖。
+浏览器中的粒子与拖尾特效编辑器，参照 Trail Studio 的界面和交互独立实现。使用原生 JavaScript、Canvas 2D 和 CSS，无第三方运行依赖。
+
+[![Deploy GitHub Pages](https://github.com/jwk000/happy-particle-system/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/jwk000/happy-particle-system/actions/workflows/deploy-pages.yml)
+
+**[在线使用编辑器](https://jwk000.github.io/happy-particle-system/)** · [源码仓库](https://github.com/jwk000/happy-particle-system)
+
+![编辑器预览](docs/editor-preview.jpg)
 
 ## 启动
 
 需要 Node.js 22 或更新版本，无需执行 `npm install`。
 
 ```bash
-cd /Users/happyelements/ai-tools/happy-particle-system
+git clone https://github.com/jwk000/happy-particle-system.git
+cd happy-particle-system
 npm run dev
 ```
 
@@ -22,11 +29,19 @@ npm run build
 
 ## GitHub Pages 部署
 
-源码仓库保持私有。由于当前 GitHub 套餐不支持私有仓库 Pages，使用公开仓库 `jwk000/happy-particle-system-pages` 托管构建产物，Pages 发布源为 `main` 分支根目录。
+源码与部署使用同一个公开仓库 `jwk000/happy-particle-system`，无需独立发布仓库或个人访问令牌。站点地址为 [https://jwk000.github.io/happy-particle-system/](https://jwk000.github.io/happy-particle-system/)。
 
-更新站点时，先执行 `npm test` 和 `npm run build`，将 `dist/` 中的 `index.html` 与 `src/` 同步到发布仓库，保留空文件 `.nojekyll`，提交并推送发布仓库的 `main` 分支。GitHub Pages 会自动发布该分支。
+推送到 `main` 分支后，[Deploy GitHub Pages 工作流](.github/workflows/deploy-pages.yml) 自动执行：
 
-发布仓库只包含浏览器使用的静态文件；这些 HTML、CSS 和 JavaScript 对访问者公开，不包含源码仓库的提交历史、测试、说明文档及预览截图。本地预览与 Pages 地址属于不同来源，浏览器保存的项目不会自动迁移，需要通过 JSON 导出和导入转移。
+1. 使用 Node.js 22 运行 `npm test`。
+2. 执行 `npm run build`，生成 `dist/`。
+3. 上传 `dist/`，通过 GitHub Pages 发布站点。
+
+测试或构建失败时不会执行发布，线上保留此前成功部署的版本。可以在仓库的 **Actions → Deploy GitHub Pages** 页面查看状态或通过 **Run workflow** 手动重试；仅 `main` 分支允许发布。
+
+仓库 **Settings → Pages → Source** 设置为 **GitHub Actions** 。工作流只申请读取源码、写入 Pages 和签发部署身份令牌所需的权限，不需要配置额外 Secret。
+
+只有 `dist/` 中的 HTML、CSS 和 JavaScript 部署到站点；源码仓库本身公开。本地预览与 Pages 地址属于不同来源，浏览器保存的项目不会自动迁移，需要通过 JSON 导出和导入转移。
 
 ## 已实现功能
 
@@ -75,6 +90,7 @@ npm run build
 | `tests/model.test.mjs` | 模型与模拟逻辑的自动测试 |
 | `scripts/serve.mjs` | 本地静态开发服务 |
 | `scripts/build.mjs` | 静态产物构建 |
+| `.github/workflows/deploy-pages.yml` | 测试、构建与 GitHub Pages 自动部署 |
 
 ## 与参考站的差异
 
